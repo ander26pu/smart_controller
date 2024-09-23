@@ -26,8 +26,8 @@ float temp1, hum1, pres1, gas1;
 float temp2, hum2, pres2, gas2;
 
 // Límites para el control de los relés
-float temp_min = 20.0, temp_max = 25.0;
-float hum_min = 40.0, hum_max = 60.0;
+float temp_min = 0.0, temp_max = 15.0;
+float hum_min = 70.0, hum_max = 85.0;
 float gas_threshold = 300.0; // Calidad de aire
 
 // Configurar el tiempo de muestreo para los sensores (en milisegundos)
@@ -114,11 +114,8 @@ void relayController(){
   
   if (avgTemp > temp_max) {
     digitalWrite(R1, HIGH); // Encender R1 si la temperatura promedio es mayor que el máximo
-  } else if (avgTemp < temp_min) {
-    digitalWrite(R4, HIGH); // Encender R4 si la temperatura promedio es menor que el mínimo
   } else {
     digitalWrite(R1, LOW); // Apagar R1 si está entre los límites
-    digitalWrite(R4, LOW); // Apagar R4 si está entre los límites
   }
 
   // Control de humedad
@@ -126,21 +123,18 @@ void relayController(){
 
   if (avgHum < hum_min) {
     digitalWrite(R2, HIGH); // Encender R2 si la humedad promedio es menor que el mínimo
+    digitalWrite(R3, HIGH); // Encender R2 si la humedad promedio es menor que el mínimo
   } else {
     digitalWrite(R2, LOW); // Apagar R2 si la humedad está por encima del mínimo
+    digitalWrite(R3, LOW); // Apagar R2 si la humedad está por encima del mínimo
   }
 
-  if (avgHum > hum_max) {
-    digitalWrite(R3, HIGH); // Encender R3 si la humedad promedio es mayor que el máximo
-  } else {
-    digitalWrite(R3, LOW); // Apagar R3 si la humedad está por debajo del máximo
-  }
 
   // Control de calidad del aire
   if (gas1 > gas_threshold || gas2 > gas_threshold) {
-    digitalWrite(R3, HIGH); // Encender R3 si la calidad del aire es mala
+    digitalWrite(R1, HIGH); // Encender R3 si la calidad del aire es mala
   } else {
-    digitalWrite(R3, LOW);  // Apagar R3 si la calidad del aire es buena
+    digitalWrite(R1, LOW);  // Apagar R3 si la calidad del aire es buena
   }
 }
 // Función para mostrar los datos en la pantalla OLED
