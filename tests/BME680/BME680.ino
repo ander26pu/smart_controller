@@ -25,7 +25,7 @@
 Adafruit_BME680 bme;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial);
   Serial.println(F("BME680 test"));
 
