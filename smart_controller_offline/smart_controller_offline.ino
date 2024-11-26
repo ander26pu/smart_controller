@@ -6,7 +6,6 @@
 // Board: ESP32R4 V2
 
 #include <Wire.h>
-#include <Adafruit_Sensor.h>
 #include <Adafruit_BME680.h>
 #include <U8g2lib.h>
 
